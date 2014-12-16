@@ -1,15 +1,33 @@
-## Put comments here that give an overall description of what your
-## functions do
+## First function gets a matrix as an argument and creates list of 4 functions
+## that allow to set and get matrix value and its inverse matrix value.
+## Second function gets this list as an argument, then checks if inverse matrix value exists
+## if yes then it prints existing value, if no it compute new value.
 
-## Write a short comment describing this function
+## Both functions are analogues of example functions.
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  i <- NULL
+  set <- function(y) {
+    x <<- y
+    i <<- NULL
+  }
+  get <- function() x
+  seti <- function(inverse) i <<- inverse
+  geti <- function() i
+  list(set = set, get = get,
+       seti = seti,
+       geti = geti)
 }
 
 
-## Write a short comment describing this function
-
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+cacheSolve <- function(x) {
+  i <- x$geti()
+  if(!is.null(i)) {
+    message("getting cached data")
+    return(i)
+  }
+  data <- x$get()
+  i <- solve(data)
+  x$seti(i)
+  i
 }
